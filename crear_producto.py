@@ -45,7 +45,7 @@ def crear_productos():
                 
                 df2['Variant SKU'] = df2['SKU'].apply(lambda x: str(x).replace('.0', ''))
                 
-                df['Handle'] = df['Title'].str.lower().apply(unidecode).str.replace(r'[^\w\s]+', '', regex=True).str.replace(' ', '-') + '-' + df2['Variant SKU']
+                df['Handle'] = df['Title'].str.lower().apply(lambda x: unidecode(x) if isinstance(x, str) else x).str.replace(r'[^\w\s]+', '', regex=True).str.replace(' ', '-') + '-' + df2['Variant SKU']
                 
                 #Vendor
                 df['Vendor'] = df2['Vendor']
