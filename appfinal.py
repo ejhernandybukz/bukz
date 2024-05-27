@@ -20,7 +20,7 @@ st.sidebar.image(resized_image)
 
 with st.sidebar:
     choose = option_menu("Menú de opciones", ['Actualización de inventario celesa', 'Creación de productos', 
-                                              'Corte - Ventas', 'Corte - No Ventas', 'Sugerido Inventario', 'proveedores'],
+                                              'Corte - Ventas', 'Corte - No Ventas', 'Sugerido Inventario', 'Proveedores Stock'],
     icons=["list check", "database up", 'envelope at', 'envelope at',"check2 square", "list check" ], menu_icon="cast", default_index=0,
     styles={ "container": {"padding": "5!important", "background-color": "#fafafa"},
         "icon": { "font-size": "25px"}, 
@@ -51,5 +51,5 @@ elif choose == 'Corte - No Ventas':
 elif choose == 'Sugerido Inventario':
     sugerido()
     
-elif choose == 'proveedores':
+elif choose == 'Proveedores Stock':
     provedores_inventario()
