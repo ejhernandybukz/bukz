@@ -6,4 +6,5 @@ openpyxl
 XlsxWriter
 sqlalchemy
 psycopg2-binary
+xlrd
 
