@@ -6,6 +6,7 @@ from crear_producto import crear_productos
 from corte_provedores import corte_provedores
 from corte_no_ventas import corte_provedores_no_ventas
 from sugerido import sugerido
+from pedidos import app
 from provedores import provedores_inventario
 
 
@@ -20,8 +21,8 @@ st.sidebar.image(resized_image)
 
 with st.sidebar:
     choose = option_menu("Menú de opciones", ['Actualización de inventario celesa', 'Creación de productos', 
-                                              'Corte - Ventas', 'Corte - No Ventas', 'Sugerido Inventario', 'Stock Proveedores'],
-    icons=["list check", "database up", 'envelope at', 'envelope at',"check2 square" , "list check"], menu_icon="cast", default_index=0,
+                                              'Corte - Ventas', 'Corte - No Ventas', 'Sugerido Inventario', 'Pedidos', 'proveedores'],
+    icons=["list check", "database up", 'envelope at', 'envelope at',"check2 square",'envelope at', "list check" ], menu_icon="cast", default_index=0,
     styles={ "container": {"padding": "5!important", "background-color": "#fafafa"},
         "icon": { "font-size": "25px"}, 
         "nav-link": {"font-size": "16px", "text-align": "left", "margin":"0px", "--hover-color": "#eee", "color": "black"},
@@ -50,8 +51,9 @@ elif choose == 'Corte - No Ventas':
     
 elif choose == 'Sugerido Inventario':
     sugerido()
-
+    
+elif choose == 'Pedidos':
+    app()
+    
 elif choose == 'proveedores':
     provedores_inventario()
-
-       
