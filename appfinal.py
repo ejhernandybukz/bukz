@@ -6,6 +6,7 @@ from crear_producto import crear_productos
 from corte_provedores import corte_provedores
 from corte_no_ventas import corte_provedores_no_ventas
 from sugerido import sugerido
+from provedores import provedores_inventario
 
 
 # Cargar la imagen
@@ -49,5 +50,8 @@ elif choose == 'Corte - No Ventas':
     
 elif choose == 'Sugerido Inventario':
     sugerido()
+
+elif choose == 'proveedores':
+    provedores_inventario()
 
        
