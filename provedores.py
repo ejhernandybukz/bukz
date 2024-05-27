@@ -12,8 +12,10 @@ def provedores_inventario():
 
     def load_data(file):
         mime_type, _ = mimetypes.guess_type(file.name)
-        if mime_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" or mime_type == "application/vnd.ms-excel":
-            return pd.read_excel(file)
+        if mime_type == "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet":
+            return pd.read_excel(file, engine='openpyxl')
+        elif mime_type == "application/vnd.ms-excel":
+            return pd.read_excel(file, engine='xlrd')
         elif mime_type == "text/csv":
             return pd.read_csv(file)
         else:
@@ -73,7 +75,7 @@ def provedores_inventario():
             name_col = st.selectbox('Selecciona la columna para Título del libro', all_columns, key='name', on_change=None)
             quantity_col = st.selectbox('Selecciona la columna para Cantidad', all_columns, key='quantity', on_change=None)
             proveedores_file = "lista_proveedores.xlsx"  # Ajusta la ruta del archivo si es necesario
-            proveedores_df = pd.read_excel(proveedores_file)
+            proveedores_df = pd.read_excel(proveedores_file, engine='openpyxl')
             vendor_list = proveedores_df["proveedores"].tolist()  # Asumiendo lista fija de proveedores
             vendor = st.selectbox('Selecciona un proveedor', vendor_list)
 
@@ -84,6 +86,7 @@ def provedores_inventario():
                     st.success('Datos cargados correctamente en la base de datos!')
                 except Exception as e:
                     st.error(f'Error al cargar datos: {str(e)}')
+
 
 
 
