@@ -57,20 +57,35 @@ def provedores_inventario():
 
     if uploaded_file:
         df = load_data(uploaded_file)
-        if not df.empty:
+        if df.empty:
+            st.warning("El archivo está vacío o no se pudo cargar.")
+        else:
+            st.write("Datos cargados:")
+            st.write(df.head())
+
             all_columns = df.columns.tolist()
             sku_col = st.selectbox('Selecciona la columna para SKU', all_columns, key='sku', on_change=None)
             name_col = st.selectbox('Selecciona la columna para Título del libro', all_columns, key='name', on_change=None)
             quantity_col = st.selectbox('Selecciona la columna para Cantidad', all_columns, key='quantity', on_change=None)
+            
             proveedores_file = "lista_proveedores.xlsx"  # Ajusta la ruta del archivo si es necesario
-            proveedores_df = pd.read_excel(proveedores_file)
-            vendor_list = proveedores_df["proveedores"].tolist()  # Asumiendo lista fija de proveedores
-            vendor = st.selectbox('Selecciona un proveedor', vendor_list)
+            try:
+                proveedores_df = pd.read_excel(proveedores_file)
+                vendor_list = proveedores_df["proveedores"].tolist()  # Asumiendo lista fija de proveedores
+                vendor = st.selectbox('Selecciona un proveedor', vendor_list)
+            except Exception as e:
+                st.error(f"Error al cargar la lista de proveedores: {str(e)}")
+                vendor_list = []
+                vendor = None
 
-            if st.button('Confirmar selecciones y procesar datos'):
+            if st.button('Confirmar selecciones y procesar datos') and vendor:
                 df_prepared = standardize_columns(df, sku_col, name_col, quantity_col, vendor)
+                st.write("Datos estandarizados:")
+                st.write(df_prepared.head())
                 try:
                     upsert_to_database(df_prepared, 'provedores_inventario')
                     st.success('Datos cargados correctamente en la base de datos!')
                 except Exception as e:
                     st.error(f'Error al cargar datos: {str(e)}')
+
+
