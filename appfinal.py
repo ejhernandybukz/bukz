@@ -19,8 +19,8 @@ st.sidebar.image(resized_image)
 
 with st.sidebar:
     choose = option_menu("Menú de opciones", ['Actualización de inventario celesa', 'Creación de productos', 
-                                              'Corte - Ventas', 'Corte - No Ventas', 'Sugerido Inventario'],
-    icons=["list check", "database up", 'envelope at', 'envelope at',"check2 square" ], menu_icon="cast", default_index=0,
+                                              'Corte - Ventas', 'Corte - No Ventas', 'Sugerido Inventario', 'Stock Proveedores'],
+    icons=["list check", "database up", 'envelope at', 'envelope at',"check2 square" , "list check"], menu_icon="cast", default_index=0,
     styles={ "container": {"padding": "5!important", "background-color": "#fafafa"},
         "icon": { "font-size": "25px"}, 
         "nav-link": {"font-size": "16px", "text-align": "left", "margin":"0px", "--hover-color": "#eee", "color": "black"},
