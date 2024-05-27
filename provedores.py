@@ -30,7 +30,7 @@ def provedores_inventario():
             'updated_at': pd.Timestamp.now().date()
         })
 
-    def upsert_to_database(df, table_name):
+    def upsert_to_database(df, table_name, vendor):
         conn = engine.raw_connection()
         cursor = conn.cursor()
         sql_query = sql.SQL("""
@@ -43,7 +43,17 @@ def provedores_inventario():
         """).format(table=sql.Identifier(table_name))
         
         try:
+            # Actualizar o insertar los registros presentes en el archivo
             execute_values(cursor, sql_query, df.values.tolist(), template=None, page_size=100)
+            
+            # Actualizar el stock a 0 para los registros no presentes en el archivo
+            sku_list = df['sku'].tolist()
+            update_query = sql.SQL("""
+                UPDATE {table} SET stock = 0, updated_at = %s
+                WHERE vendor = %s AND sku NOT IN %s
+            """).format(table=sql.Identifier(table_name))
+            cursor.execute(update_query, (pd.Timestamp.now().date(), vendor, tuple(sku_list)))
+            
             conn.commit()
         except Exception as e:
             conn.rollback()
@@ -57,35 +67,23 @@ def provedores_inventario():
 
     if uploaded_file:
         df = load_data(uploaded_file)
-        if df.empty:
-            st.warning("El archivo está vacío o no se pudo cargar.")
-        else:
-            st.write("Datos cargados:")
-            st.write(df.head())
-
+        if not df.empty:
             all_columns = df.columns.tolist()
             sku_col = st.selectbox('Selecciona la columna para SKU', all_columns, key='sku', on_change=None)
             name_col = st.selectbox('Selecciona la columna para Título del libro', all_columns, key='name', on_change=None)
             quantity_col = st.selectbox('Selecciona la columna para Cantidad', all_columns, key='quantity', on_change=None)
-            
             proveedores_file = "lista_proveedores.xlsx"  # Ajusta la ruta del archivo si es necesario
-            try:
-                proveedores_df = pd.read_excel(proveedores_file)
-                vendor_list = proveedores_df["proveedores"].tolist()  # Asumiendo lista fija de proveedores
-                vendor = st.selectbox('Selecciona un proveedor', vendor_list)
-            except Exception as e:
-                st.error(f"Error al cargar la lista de proveedores: {str(e)}")
-                vendor_list = []
-                vendor = None
+            proveedores_df = pd.read_excel(proveedores_file)
+            vendor_list = proveedores_df["proveedores"].tolist()  # Asumiendo lista fija de proveedores
+            vendor = st.selectbox('Selecciona un proveedor', vendor_list)
 
-            if st.button('Confirmar selecciones y procesar datos') and vendor:
+            if st.button('Confirmar selecciones y procesar datos'):
                 df_prepared = standardize_columns(df, sku_col, name_col, quantity_col, vendor)
-                st.write("Datos estandarizados:")
-                st.write(df_prepared.head())
                 try:
-                    upsert_to_database(df_prepared, 'provedores_inventario')
+                    upsert_to_database(df_prepared, 'provedores_inventario', vendor)
                     st.success('Datos cargados correctamente en la base de datos!')
                 except Exception as e:
                     st.error(f'Error al cargar datos: {str(e)}')
+
 
 
