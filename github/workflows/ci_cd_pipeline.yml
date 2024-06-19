@@ -1,0 +1,30 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # O el nombre de la rama que quieras usar
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: bukz  # Nombre del ambiente que has configurado en GitHub
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Run script
+      run: |
+        python appfinal.py
+      env:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
