@@ -7,7 +7,7 @@ from corte_provedores import corte_provedores
 from corte_no_ventas import corte_provedores_no_ventas
 from sugerido import sugerido
 from provedores import provedores_inventario
-
+from pedidos_usd import conversor_pedidos
 
 # Cargar la imagen
 logo_image = Image.open("LOGO_BUKZ.webp")  # Reemplaza con la ruta o nombre de archivo correcto
