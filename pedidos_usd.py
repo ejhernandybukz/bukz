@@ -8,11 +8,7 @@ def conversor_pedidos():
     
     st.title("Conversor COP-USD para pedidos")
 
-    # Configura tus credenciales y valores por defecto
-    ACCESS_TOKEN = os.getenv('ACCESS_TOKEN')
-    if ACCESS_TOKEN is None:
-       st.error('No se encontró la variable de entorno ACCESS_TOKEN. Por favor asegúrese de que está configurada.')
-       return
+    ACCESS_TOKEN = st.secrets["ACCESS_TOKEN"]
     SHOP_NAME = 'bukz-co'
     API_URL = 'https://v6.exchangerate-api.com/v6/e66a50170b1822d18a576b37/latest/USD'
     
