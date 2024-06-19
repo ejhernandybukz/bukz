@@ -25,6 +25,6 @@ jobs:
 
     - name: Run script
       run: |
-        python appfinal.py
+        python pedidos_usd.py
       env:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
