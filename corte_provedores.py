@@ -168,6 +168,8 @@ def corte_provedores():
             
             <p>Le recordamos que la cuenta de cobro o factura debe ser remitida <strong>exclusivamente a facturacion@bukz.co antes del día 25 del mes en curso</strong>.</p>
             
+            <p> Por asuntos contables, les pedimos amablemente que envíen una factura especificando el lugar de venta, indicando si es <strong>Medellín</strong> y otra que especifique si es <strong>Bogotá</strong>, así como se especifica en los archivos del corte de venta.</p>
+            
             <p>Para cualquier consulta o asunto adicional, no dude en contactar a los siguientes departamentos:</p>
             <ul>
                 <li>Facturación: facturacion@bukz.co</li>
