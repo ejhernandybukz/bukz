@@ -1,5 +1,5 @@
 streamlit
-pandas==1.5.3
+pandas
 streamlit_option_menu
 unidecode
 openpyxl
