@@ -23,7 +23,7 @@ def corte_provedores():
         st.session_state['envio_proveedores'] = pd.DataFrame(columns=['Proveedor', 'Estado'])
     
     st.markdown("<h3>Archivo con ventas mensuales</h3>", unsafe_allow_html=True)
-    uploaded_file_ventas_mesuales = st.file_uploader("", type=["xlsx"], key="archivo_productos")
+    uploaded_file_ventas_mesuales = st.file_uploader("El archivo debe tener las columnas: product_title, variant_sku, product_vendor, pos_location_name, net_quantity", type=["xlsx"], key="archivo_productos")
     
     if uploaded_file_ventas_mesuales is not None and proveedores_df_1 is not None:
         if st.button("Continuar"):
